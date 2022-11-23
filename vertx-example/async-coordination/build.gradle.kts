@@ -1,9 +1,9 @@
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
 plugins {
     id("java")
 }
+
+group = "ru.vk"
+version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
