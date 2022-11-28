@@ -1,4 +1,4 @@
-package ru.vk.example;
+package ru.vk.example.simple;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -8,8 +8,9 @@ public final class SimpleVerticle extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) {
+    System.out.println(deploymentID() + " deploying in thread " + Thread.currentThread());
     vertx.executeBlocking(promise -> {
-      System.out.println("Call some blocking API");
+      System.out.println(deploymentID() + " is calling some blocking API " + Thread.currentThread());
       promise.complete();
     }, res -> {
       System.out.println("Start Simple");

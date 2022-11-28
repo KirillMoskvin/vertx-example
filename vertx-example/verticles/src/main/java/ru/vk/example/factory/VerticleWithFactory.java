@@ -1,4 +1,4 @@
-package ru.vk.example;
+package ru.vk.example.factory;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -17,7 +17,7 @@ public final class VerticleWithFactory extends AbstractVerticle {
 
   @Override
   public void start() {
-    System.out.println("Start " + number + " VerticleWithFactory");
+    System.out.println("Start " + number + " VerticleWithFactory " + deploymentID());
   }
 
   @SuppressWarnings("NotNullNullableValidation")

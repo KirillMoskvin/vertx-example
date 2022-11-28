@@ -1,4 +1,4 @@
-package ru.vk.example;
+package ru.vk.example.simple;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -13,5 +13,6 @@ public enum SimpleApplication {
     final JsonObject config = new JsonObject().put("name", "simple");
     final DeploymentOptions options = new DeploymentOptions().setWorker(true).setConfig(config);
     vertx.deployVerticle(new SimpleVerticle(), options);
+    vertx.deployVerticle(new SimpleVerticle());
   }
 }

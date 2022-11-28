@@ -1,4 +1,4 @@
-package ru.vk.example;
+package ru.vk.example.factory;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;

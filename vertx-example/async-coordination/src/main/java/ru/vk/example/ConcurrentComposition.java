@@ -36,6 +36,7 @@ public final class ConcurrentComposition {
       }
     });
 
+    System.out.println("Running async action...");
     asyncFunc.run();
   }
 

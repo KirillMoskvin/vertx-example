@@ -9,7 +9,8 @@ import io.vertx.core.file.FileSystem;
 public final class SequentialComposition {
 
   public static void main(String[] args) {
-    FileSystem fs = Vertx.vertx().fileSystem();
+    Vertx vertx = Vertx.vertx();
+    FileSystem fs = vertx.fileSystem();
 
     final var fileName = "example1.txt";
 
@@ -21,13 +22,16 @@ public final class SequentialComposition {
     Future<Void> startFuture = future1
         .compose(v -> Future.<Void>future(promise -> {
           System.out.println("future2");
-          fs.writeFile(fileName, Buffer.buffer(), promise);
+          fs.writeFile(fileName, Buffer.buffer("Test file write"), promise);
         }))
         .compose(v -> Future.future(promise -> {
           System.out.println("future3");
           fs.move(fileName, "example2.txt", promise);
         }));
 
-    startFuture.onComplete(result -> System.out.println("Complete ALL " + result.succeeded()));
+    startFuture.onComplete(
+        result -> System.out.println("Complete ALL " + (result.succeeded() ? "Success" : result.cause().getMessage()))
+    );
+    System.out.println("Main finished");
   }
 }
