@@ -10,6 +10,7 @@ public class VertxContext {
     Vertx vertx = Vertx.vertx();
 
     Context context = vertx.getOrCreateContext();
+//    runThrowingCode(context);
 
     context.runOnContext((v) -> {
       System.out.println("This will be executed asynchronously in the same context");
@@ -28,6 +29,15 @@ public class VertxContext {
     context.runOnContext((v) -> {
       String hello = context.get("data");
       System.out.println("context data " + hello);
+    });
+
+    context.exceptionHandler(e -> System.out.println(e.getMessage() + " but we fixed everything!"));
+    runThrowingCode(context);
+  }
+
+  private static void runThrowingCode(Context context) {
+    context.runOnContext(__ -> {
+      throw new IllegalStateException("Something bad happened");
     });
   }
 }

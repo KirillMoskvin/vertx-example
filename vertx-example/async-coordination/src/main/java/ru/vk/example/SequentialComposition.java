@@ -20,11 +20,11 @@ public final class SequentialComposition {
     });
 
     Future<Void> startFuture = future1
-        .compose(v -> Future.<Void>future(promise -> {
+        .compose(result -> Future.<Void>future(promise -> {
           System.out.println("future2");
           fs.writeFile(fileName, Buffer.buffer("Test file write"), promise);
         }))
-        .compose(v -> Future.future(promise -> {
+        .compose(result -> Future.future(promise -> {
           System.out.println("future3");
           fs.move(fileName, "example2.txt", promise);
         }));

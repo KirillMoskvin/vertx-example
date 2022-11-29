@@ -8,29 +8,30 @@ import io.vertx.core.Promise;
 public final class ConcurrentComposition {
 
   public static void main(String[] args) {
-    Future<Void> future1 = Future.future(promise -> {
+    Future<String> future1 = Future.future(promise -> {
       sleep(2000);
       System.out.println("future1");
-      promise.complete();
+      promise.complete("Never");
     });
 
-    Future<Void> future2 = Future.future(promise -> {
+    Future<String> future2 = Future.future(promise -> {
       sleep(1000);
       System.out.println("future2");
-      promise.complete();
+      promise.complete(" gonna");
     });
 
-    Promise<Void> promise = Promise.promise();
+    Promise<String> promise = Promise.promise();
     Runnable asyncFunc = () -> {
       System.out.println("future3");
-      promise.complete();
+      promise.complete(" give you up");
     };
-    Future<Void> future3 = promise.future();
+    Future<String> future3 = promise.future();
 
 
-    CompositeFuture.all(future1, future2, future3).onComplete(ar -> {
-      if (ar.succeeded()) {
-        System.out.println("Success ALL");
+    CompositeFuture.all(future1, future2, future3).onComplete(asyncResult -> {
+      if (asyncResult.succeeded()) {
+        CompositeFuture result = asyncResult.result();
+        System.out.println("Success ALL " + result.resultAt(0) + result.resultAt(1) + result.resultAt(2));
       } else {
         System.out.println("Fail ALL");
       }
